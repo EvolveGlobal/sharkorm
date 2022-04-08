@@ -124,11 +124,13 @@
                     }
                         break;
                     case SRK_PROPERTY_TYPE_ARRAY: {
-                        NSData* jsonData = [NSData dataWithBytes:[(NSString*)value UTF8String] length:[(NSString*)value length]];
+                        NSData* jsonData = [(NSString*)value dataUsingEncoding:NSUTF8StringEncoding];
                         NSError* err;
                         id newValue = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:&err];
                         if (!err && newValue) {
                             value = newValue;
+                        } else {
+                            value = nil;
                         }
                     }
                         break;
